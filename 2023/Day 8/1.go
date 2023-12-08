@@ -51,12 +51,9 @@ func main() {
 	}
 	reachable[end] = 0
 	ans := 0
-	for true {
-		if reachable[start] != -1 {
-			fmt.Println(ans + reachable[start])
-			break
-		}
+	for reachable[start] == -1 {
 		ans += len(directions)
 		start = endUp[start]
 	}
+	fmt.Println(ans + reachable[start])
 }

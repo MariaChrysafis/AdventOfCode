@@ -37,7 +37,7 @@ func main() {
 		cur := key
 		reachable[key] = -1
 		for steps, c := range directions {
-			if string(c) == "L" {
+			if c == 'L' {
 				cur = left[cur]
 			} else {
 				cur = right[cur]

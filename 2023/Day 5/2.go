@@ -24,29 +24,24 @@ func get_mn(arr []int, a [][][]int) int {
 	if len(a) == 0 {
 		return arr[0]
 	}
-	l := arr[0]
-	r := arr[1]
-	special := []int{l, r}
+	special := []int{arr[0], arr[1]}
 	for _, b := range a[0] {
 		y := b[1]
 		length := b[2]
-		if max(y, l) <= r {
-			special = append(special, max(y, l))
+		if max(y, arr[0]) <= arr[1] {
+			special = append(special, max(y, arr[0]))
 		}
-		if min(y+length-1, r) >= l {
-			special = append(special, min(y+length-1, r))
+		if min(y+length-1, arr[1]) >= arr[0] {
+			special = append(special, min(y+length-1, arr[1]))
 		}
 	}
 	sort.Slice(special, func(i int, j int) bool {
 		return special[i] < special[j]
 	})
-	intervals := make([][]int, 0)
-	intervals = append(intervals, []int{l, l})
-	for i := range special {
-		if i != 0 {
-			if special[i-1]+1 <= special[i] {
-				intervals = append(intervals, []int{special[i-1] + 1, special[i]})
-			}
+	intervals := [][]int{{arr[0], arr[0]}}
+	for i := 1; i < len(special); i++ {
+		if special[i-1]+1 <= special[i] {
+			intervals = append(intervals, []int{special[i-1] + 1, special[i]})
 		}
 	}
 	mn := int(1e9)
@@ -87,19 +82,17 @@ func main() {
 	for i, x := range arr {
 		if i == 0 {
 			seeds = convert(x)
-			continue
-		}
-		if x == "" {
-			inp = append(inp, make([][]int, 0))
 		} else {
-			inp[len(inp)-1] = append(inp[len(inp)-1], convert(x))
+			if x == "" {
+				inp = append(inp, make([][]int, 0))
+			} else {
+				inp[len(inp)-1] = append(inp[len(inp)-1], convert(x))
+			}
 		}
 	}
 	ans := int(1e9)
 	for i := 0; i < len(seeds); i += 2 {
-		l := seeds[i]
-		r := seeds[i+1]
-		ans = min(ans, get_mn([]int{l, l + r - 1}, inp))
+		ans = min(ans, get_mn([]int{seeds[i], seeds[i] + seeds[i+1] - 1}, inp))
 	}
 	fmt.Print(ans)
 }

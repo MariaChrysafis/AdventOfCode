@@ -52,11 +52,8 @@ func main() {
 		val := seed
 		for _, a := range inp {
 			for _, b := range a {
-				x := b[0]
-				y := b[1]
-				l := b[2]
-				if val >= y && val <= y+l-1 {
-					val += x - y
+				if val >= b[1] && val <= b[1]+b[2]-1 {
+					val += b[0] - b[1]
 					break
 				}
 			}

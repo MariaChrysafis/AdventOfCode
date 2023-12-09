@@ -22,7 +22,6 @@ func main() {
 			arr[len(arr)-1] += string(input[i])
 		}
 	}
-	fmt.Println(arr)
 	get_type := func(s string) int {
 		cnt := make(map[string]int)
 		for _, c := range s {
@@ -32,20 +31,7 @@ func main() {
 		for _, value := range cnt {
 			mx_value = max(mx_value, value)
 		}
-		if mx_value == 5 {
-			return 1
-		} else if mx_value == 4 {
-			return 2
-		} else if mx_value == 3 && len(cnt) == 2 {
-			return 3
-		} else if mx_value == 3 {
-			return 4
-		} else if mx_value == 2 && len(cnt) == 3 {
-			return 5
-		} else if mx_value == 2 {
-			return 6
-		}
-		return 7
+		return -10*mx_value + len(cnt)
 	}
 	get_strength := func(s string) int {
 		cards := "AKQJT9876543210"

@@ -24,34 +24,32 @@ func main() {
 		log.Fatal(err)
 	}
 	input := string(content)
-	arr := make([]string, 1)
+	inp := make([]string, 1)
 	for i := range input {
 		if string(input[i]) == "\n" {
-			arr = append(arr, "")
+			inp = append(inp, "")
 		} else {
-			arr[len(arr)-1] += string(input[i])
+			inp[len(inp)-1] += string(input[i])
 		}
 	}
 	ans := 0
-	for _, x := range arr {
-		new_arr := cleanUp(strings.Split(x, " "))
-		new_arr = new_arr[1:]
-		new_arr[0] = new_arr[0][1:]
+	for _, x := range inp {
+		arr := cleanUp(strings.Split(x, " "))[1:]
+		arr[0] = arr[0][1:]
 		res := 0
-		for i := range new_arr {
-			new_arr[i] = strings.ReplaceAll(new_arr[i], " ", "")
+		for i := range arr {
+			arr[i] = strings.ReplaceAll(arr[i], " ", "")
 		}
-		new_arr = cleanUp(new_arr)
 		boundary := 0
-		for i := 0; i < len(new_arr); i++ {
-			if new_arr[i] == "|" {
+		for i := 0; i < len(arr); i++ {
+			if arr[i] == "|" {
 				boundary = i
 			}
 		}
 		for i := 0; i < boundary; i++ {
 			found := false
-			for j := boundary + 1; j < len(new_arr); j++ {
-				found = found || (new_arr[j] == new_arr[i])
+			for j := boundary + 1; j < len(arr); j++ {
+				found = found || (arr[j] == arr[i])
 			}
 			if found {
 				res += 1

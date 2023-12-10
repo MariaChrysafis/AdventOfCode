@@ -48,8 +48,7 @@ func main() {
 	for i := range inp {
 		for j := range inp[0] {
 			if inp[i][j] == 'S' {
-				sx = i
-				sy = j
+				sx, sy = i, j
 			}
 		}
 	}

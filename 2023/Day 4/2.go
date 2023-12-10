@@ -35,36 +35,32 @@ func main() {
 		log.Fatal(err)
 	}
 	input := string(content)
-	arr := make([]string, 1)
+	inp := make([]string, 1)
 	for i := range input {
 		if string(input[i]) == "\n" {
-			arr = append(arr, "")
+			inp = append(inp, "")
 		} else {
-			arr[len(arr)-1] += string(input[i])
+			inp[len(inp)-1] += string(input[i])
 		}
 	}
 	objectives := [][]string{}
 	cards := [][]string{}
-	copies := make([]int, len(arr))
-	for i := range copies {
+	copies := make([]int, len(inp))
+	for i, x := range inp {
 		copies[i] = 1
-	}
-	for _, x := range arr {
-		new_arr := cleanUp(strings.Split(x, " "))
-		new_arr = new_arr[1:]
-		new_arr[0] = new_arr[0][1:]
-		for i := range new_arr {
-			new_arr[i] = strings.ReplaceAll(new_arr[i], " ", "")
+		arr := cleanUp(strings.Split(x, " "))[1:]
+		arr[0] = arr[0][1:]
+		for i := range arr {
+			arr[i] = strings.ReplaceAll(arr[i], " ", "")
 		}
-		new_arr = cleanUp(new_arr)
 		boundary := 0
-		for i := 0; i < len(new_arr); i++ {
-			if new_arr[i] == "|" {
+		for i := 0; i < len(arr); i++ {
+			if arr[i] == "|" {
 				boundary = i
 			}
 		}
-		objectives = append(objectives, new_arr[:boundary])
-		cards = append(cards, new_arr[boundary+1:])
+		objectives = append(objectives, arr[:boundary])
+		cards = append(cards, arr[boundary+1:])
 	}
 	sum := 0
 	for i := range objectives {

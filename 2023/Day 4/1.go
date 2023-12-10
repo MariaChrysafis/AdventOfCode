@@ -51,9 +51,7 @@ func main() {
 		for i := 0; i < boundary; i++ {
 			found := false
 			for j := boundary + 1; j < len(new_arr); j++ {
-				if new_arr[j] == new_arr[i] {
-					found = true
-				}
+				found = found || (new_arr[j] == new_arr[i])
 			}
 			if found {
 				res += 1

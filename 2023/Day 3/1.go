@@ -48,24 +48,16 @@ func main() {
 				for y := l; y <= r; y++ {
 					for dx := -1; dx <= 1; dx++ {
 						for dy := -1; dy <= 1; dy++ {
-							if dx+x < 0 || dx+x == len(arr) {
-								continue
-							}
-							if dy+y < 0 || dy+y == len(arr[0]) {
-								continue
-							}
-							if arr[x+dx][y+dy] != '.' && !isNumeric(string(arr[x+dx][y+dy])) {
-								okay = false
+							if dx+x >= 0 && dx+x < len(arr) && dy+y >= 0 && dy+y < len(arr[0]) {
+								if arr[x+dx][y+dy] != '.' && !isNumeric(string(arr[x+dx][y+dy])) {
+									okay = false
+								}
 							}
 						}
 					}
 				}
 				if !okay {
-					str := ""
-					for y := l; y <= r; y++ {
-						str += string(arr[x][y])
-					}
-					ans += stringToInt(str)
+					ans += stringToInt(arr[x][l : r+1])
 				}
 			}
 		}

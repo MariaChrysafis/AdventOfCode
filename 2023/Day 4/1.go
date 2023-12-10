@@ -4,17 +4,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"strconv"
 	"strings"
 )
 
-func isNumeric(s string) bool {
-	return "0" <= s && s <= "9"
-}
-func stringToInt(s string) int {
-	x, _ := strconv.Atoi(s)
-	return x
-}
 func cleanUp(arr []string) []string {
 	new_arr := []string{}
 	for _, x := range arr {

@@ -40,8 +40,7 @@ func main() {
 		for j := 0; j < len(arr[x]); j++ {
 			//check if this is a number
 			if "0" <= string(arr[x][j]) && string(arr[x][j]) <= "9" {
-				l := j
-				r := j
+				l, r := j, j
 				for l != 0 && isNumeric(string(arr[x][l-1])) {
 					l -= 1
 				}
@@ -55,14 +54,10 @@ func main() {
 				for y := l; y <= r; y++ {
 					for dx := -1; dx <= 1; dx++ {
 						for dy := -1; dy <= 1; dy++ {
-							if dx+x < 0 || dx+x == len(arr) {
-								continue
-							}
-							if dy+y < 0 || dy+y == len(arr[0]) {
-								continue
-							}
-							if arr[x+dx][y+dy] != '.' && !isNumeric(string(arr[x+dx][y+dy])) {
-								okay = false
+							if dx+x >= 0 && dx+x < len(arr) && dy+y >= 0 && dy+y < len(arr[0]) {
+								if arr[x+dx][y+dy] != '.' && !isNumeric(string(arr[x+dx][y+dy])) {
+									okay = false
+								}
 							}
 						}
 					}
@@ -80,23 +75,12 @@ func main() {
 				prod := 1
 				res := []int{}
 				for _, p := range parts {
-					if abs(p[0]-i) > 1 {
-						continue
-					}
-					add := func() {
-						str := ""
-						for y := p[1]; y <= p[2]; y++ {
-							str += string(arr[p[0]][y])
+					if abs(p[0]-i) <= 1 {
+						if (p[1] <= j && j <= p[2]) || abs(p[1]-j) <= 1 || abs(p[2]-j) <= 1 {
+							cnt += 1
+							prod *= stringToInt(arr[p[0]][p[1] : p[2]+1])
+							res = append(res, stringToInt(arr[p[0]][p[1]:p[2]+1]))
 						}
-						prod *= stringToInt(str)
-						res = append(res, stringToInt(str))
-					}
-					if p[1] <= j && j <= p[2] {
-						cnt += 1
-						add()
-					} else if abs(p[1]-j) <= 1 || abs(p[2]-j) <= 1 {
-						cnt += 1
-						add()
 					}
 				}
 				if cnt == 2 {

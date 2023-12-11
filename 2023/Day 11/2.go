@@ -37,8 +37,7 @@ func main() {
 	part1 := func(repeat int, arr []string) int {
 		for t := 0; t < 2; t++ {
 			arr = swap(arr)
-			l := len(arr)
-			for i := l - 1; i >= 0; i-- {
+			for i := len(arr) - 1; i >= 0; i-- {
 				cur := arr[i]
 				if strings.Index(cur, "#") == -1 {
 					for x := 0; x < repeat-1; x++ {

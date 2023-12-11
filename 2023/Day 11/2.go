@@ -35,9 +35,7 @@ func main() {
 		}
 	}
 	part1 := func(repeat int, arr []string) int {
-		t := 2
-		for t != 0 {
-			t--
+		for t := 0; t < 2; t++ {
 			arr = swap(arr)
 			l := len(arr)
 			for i := l - 1; i >= 0; i-- {

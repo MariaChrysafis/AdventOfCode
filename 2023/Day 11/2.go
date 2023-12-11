@@ -66,5 +66,5 @@ func main() {
 		return sum / 2
 	}
 	mult := 1000000
-	fmt.Print((mult-2)*part1(3, inp) - (mult-3)*part1(2, inp))
+	fmt.Print((mult-1)*part1(2, inp) - (mult-2)*part1(1, inp))
 }

@@ -59,12 +59,8 @@ func main() {
 			}
 			return res
 		}
-		found := false
 		for i := range g {
 			for j := range g[i] {
-				if found {
-					continue
-				}
 				orig := lineOfReflection(g)
 				for t := 0; t < 2; t++ {
 					if g[i][j] == '#' {
@@ -79,11 +75,10 @@ func main() {
 						} else {
 							ans += lr[0]
 						}
-						found = true
 					}
 				}
 			}
 		}
 	}
-	fmt.Println(ans)
+	fmt.Println(ans / 2)
 }

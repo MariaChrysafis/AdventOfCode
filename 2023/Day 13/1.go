@@ -4,13 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"strconv"
 )
 
-func stringToInt(s string) int {
-	x, _ := strconv.Atoi(s)
-	return x
-}
 func transpose(arr []string) []string {
 	ans := make([]string, len(arr[0]))
 	for j := 0; j < len(arr); j++ {

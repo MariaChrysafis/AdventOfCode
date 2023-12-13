@@ -72,11 +72,12 @@ func main() {
 					} else {
 						g[i] = g[i][:j] + "#" + g[i][j+1:]
 					}
-					if t == 0 && len(lineOfReflection(g)) != 0 && !reflect.DeepEqual(orig, lineOfReflection(g)) {
-						if orig[0] == lineOfReflection(g)[0] {
-							ans += lineOfReflection(g)[1]
+					lr := lineOfReflection(g)
+					if t == 0 && len(lr) != 0 && !reflect.DeepEqual(orig, lr) {
+						if orig[0] == lr[0] {
+							ans += lr[1]
 						} else {
-							ans += lineOfReflection(g)[0]
+							ans += lr[0]
 						}
 						found = true
 					}

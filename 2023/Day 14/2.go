@@ -72,12 +72,6 @@ func main() {
 		}
 		return ans
 	}
-	print := func() {
-		for _, x := range inp {
-			fmt.Println(x)
-		}
-		fmt.Println()
-	}
 	cost := func(arr []string) int {
 		ans := 0
 		for i := range arr {
@@ -90,38 +84,40 @@ func main() {
 		return ans
 	}
 	cycle := func() {
-		//north
-		go_north()
-		//west
-		inp = transpose(inp)
-		go_north()
-		inp = transpose(inp)
-		//south
-		inp = reflect1(inp)
-		go_north()
-		inp = reflect1(inp)
-		//east
-		inp = reflect2(inp)
-		inp = transpose(inp)
-		go_north()
-		inp = transpose(inp)
-		inp = reflect2(inp)
+		for t := 0; t < 4; t++ {
+			if t == 2 {
+				inp = reflect1(inp)
+			}
+			if t == 3 {
+				inp = reflect2(inp)
+			}
+			if t%2 == 1 {
+				inp = transpose(inp)
+			}
+			go_north()
+			if t%2 == 1 {
+				inp = transpose(inp)
+			}
+			if t == 3 {
+				inp = reflect2(inp)
+			}
+			if t == 2 {
+				inp = reflect1(inp)
+			}
+		}
 	}
-	lastseen := make(map[string][]int)
+	lastseen := make(map[string]int)
 	for t := 1; t <= int(1e9); t++ {
-		fmt.Println(t)
 		cycle()
-		fmt.Println(cost(inp))
-		a := lastseen[compress(inp)]
-		if len(a) != 0 {
-			fmt.Println(t, a[0])
-			d := t - a[0]
+		a, okay := lastseen[compress(inp)]
+		if okay {
+			d := t - a
 			for t+d < int(1e9) {
 				t += d
 			}
 		} else {
-			lastseen[compress(inp)] = []int{t}
+			lastseen[compress(inp)] = t
 		}
-		print()
 	}
+	fmt.Println(cost(inp))
 }

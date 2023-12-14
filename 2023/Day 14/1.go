@@ -6,15 +6,6 @@ import (
 	"log"
 )
 
-func transpose(arr []string) []string {
-	ans := make([]string, len(arr[0]))
-	for j := 0; j < len(arr); j++ {
-		for i := 0; i < len(arr[j]); i++ {
-			ans[i] += string(arr[j][i])
-		}
-	}
-	return ans
-}
 func main() {
 	content, err := ioutil.ReadFile("input.txt")
 	if err != nil {

@@ -55,8 +55,7 @@ func main() {
 			inp[len(inp)-1] += string(input[i])
 		}
 	}
-	go_north := func() int {
-		ans := 0
+	go_north := func() {
 		for i := range inp {
 			for j := range inp[i] {
 				x := i
@@ -65,12 +64,8 @@ func main() {
 					inp[x-1] = inp[x-1][:j] + "O" + inp[x-1][j+1:]
 					x -= 1
 				}
-				if inp[x][j] == 'O' {
-					ans += len(inp) - x
-				}
 			}
 		}
-		return ans
 	}
 	cost := func(arr []string) int {
 		ans := 0

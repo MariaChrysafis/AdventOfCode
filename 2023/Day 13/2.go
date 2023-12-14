@@ -4,9 +4,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"reflect"
+	"strings"
 )
 
+func reflect1(arr []string) []string {
+	for i := 0; i*2 < len(arr); i++ {
+		arr[i], arr[len(arr)-i-1] = arr[len(arr)-i-1], arr[i]
+	}
+	return arr
+}
 func transpose(arr []string) []string {
 	ans := make([]string, len(arr[0]))
 	for j := 0; j < len(arr); j++ {
@@ -30,55 +36,58 @@ func main() {
 			inp[len(inp)-1] += string(input[i])
 		}
 	}
-	arr := make([][]string, 1)
-	for _, x := range inp {
-		if len(x) == 0 {
-			arr = append(arr, make([]string, 0))
+	go_north := func() {
+		for i := range inp {
+			for j := range inp[i] {
+				x := i
+				for x != 0 && inp[x-1][j] == '.' && inp[x][j] == 'O' {
+					inp[x] = inp[x][:j] + "." + inp[x][j+1:]
+					inp[x-1] = inp[x-1][:j] + "O" + inp[x-1][j+1:]
+					x -= 1
+				}
+			}
+		}
+	}
+	cost := func(arr []string) int {
+		ans := 0
+		for i := range arr {
+			for j := range arr[i] {
+				if arr[i][j] == 'O' {
+					ans += len(arr) - i
+				}
+			}
+		}
+		return ans
+	}
+	cycle := func() {
+		for t := 0; t < 4; t++ {
+			if t%2 == 1 {
+				inp = transpose(inp)
+			}
+			if t >= 2 {
+				inp = reflect1(inp)
+			}
+			go_north()
+			if t >= 2 {
+				inp = reflect1(inp)
+			}
+			if t%2 == 1 {
+				inp = transpose(inp)
+			}
+		}
+	}
+	lastseen := make(map[string]int)
+	for t := 1; t <= int(1e9); t++ {
+		cycle()
+		a, okay := lastseen[strings.Join(inp, "")]
+		if okay {
+			d := t - a
+			for t+d < int(1e9) {
+				t += d
+			}
 		} else {
-			arr[len(arr)-1] = append(arr[len(arr)-1], x)
+			lastseen[strings.Join(inp, "")] = t
 		}
 	}
-	ans := 0
-	for _, g := range arr {
-		lineOfReflection := func(grid []string) []int {
-			res := []int{}
-			for t := 1; t <= 100; t += 99 {
-				grid = transpose(grid)
-				for i := 1; i < 2*len(grid)-2; i += 2 {
-					//reflection over i?
-					okay := true
-					for j := range grid {
-						if i-j >= 0 && i-j < len(grid) && grid[j] != grid[i-j] {
-							okay = false
-						}
-					}
-					if okay {
-						res = append(res, t*(i+1)/2)
-					}
-				}
-			}
-			return res
-		}
-		for i := range g {
-			for j := range g[i] {
-				orig := lineOfReflection(g)
-				for t := 0; t < 2; t++ {
-					if g[i][j] == '#' {
-						g[i] = g[i][:j] + "." + g[i][j+1:]
-					} else {
-						g[i] = g[i][:j] + "#" + g[i][j+1:]
-					}
-					lr := lineOfReflection(g)
-					if t == 0 && len(lr) != 0 && !reflect.DeepEqual(orig, lr) {
-						if orig[0] == lr[0] {
-							ans += lr[1]
-						} else {
-							ans += lr[0]
-						}
-					}
-				}
-			}
-		}
-	}
-	fmt.Println(ans / 2)
+	fmt.Println(cost(inp))
 }

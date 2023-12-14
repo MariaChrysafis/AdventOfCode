@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func reflect1(arr []string) []string {
+func reflect(arr []string) []string {
 	for i := 0; i*2 < len(arr); i++ {
 		arr[i], arr[len(arr)-i-1] = arr[len(arr)-i-1], arr[i]
 	}
@@ -65,11 +65,11 @@ func main() {
 				inp = transpose(inp)
 			}
 			if t >= 2 {
-				inp = reflect1(inp)
+				inp = reflect(inp)
 			}
 			go_north()
 			if t >= 2 {
-				inp = reflect1(inp)
+				inp = reflect(inp)
 			}
 			if t%2 == 1 {
 				inp = transpose(inp)

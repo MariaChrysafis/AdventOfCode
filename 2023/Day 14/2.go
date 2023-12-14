@@ -6,22 +6,9 @@ import (
 	"log"
 )
 
-func reverse(s string) string {
-	ans := ""
-	for _, v := range s {
-		ans = string(v) + ans
-	}
-	return ans
-}
 func reflect1(arr []string) []string {
 	for i := 0; i*2 < len(arr); i++ {
 		arr[i], arr[len(arr)-i-1] = arr[len(arr)-i-1], arr[i]
-	}
-	return arr
-}
-func reflect2(arr []string) []string {
-	for i := range arr {
-		arr[i] = reverse(arr[i])
 	}
 	return arr
 }
@@ -80,24 +67,18 @@ func main() {
 	}
 	cycle := func() {
 		for t := 0; t < 4; t++ {
-			if t == 2 {
-				inp = reflect1(inp)
-			}
-			if t == 3 {
-				inp = reflect2(inp)
-			}
 			if t%2 == 1 {
 				inp = transpose(inp)
+			}
+			if t >= 2 {
+				inp = reflect1(inp)
 			}
 			go_north()
+			if t >= 2 {
+				inp = reflect1(inp)
+			}
 			if t%2 == 1 {
 				inp = transpose(inp)
-			}
-			if t == 3 {
-				inp = reflect2(inp)
-			}
-			if t == 2 {
-				inp = reflect1(inp)
 			}
 		}
 	}

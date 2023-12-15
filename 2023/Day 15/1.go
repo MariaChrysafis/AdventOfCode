@@ -4,19 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"strconv"
 	"strings"
 )
-
-func stringToInt(s string) int {
-	val, _ := strconv.Atoi(s)
-	return val
-}
-
-type Key struct {
-	s string
-	x int
-}
 
 func main() {
 	content, err := ioutil.ReadFile("input.txt")

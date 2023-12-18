@@ -14,10 +14,6 @@ type Pair struct {
 	y int
 }
 
-func add(p1 Pair, p2 Pair) Pair {
-	return Pair{p1.x + p2.x, p1.y + p2.y}
-}
-
 func stringToInt(s string) int {
 	val, _ := strconv.Atoi(s)
 	return val

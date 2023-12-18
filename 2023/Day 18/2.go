@@ -28,13 +28,13 @@ func main() {
 		}
 	}
 	move := func(x *int64, y *int64, a uint8, d int64) {
-		if a == uint8('0') {
+		if a == '0' {
 			*x += d
-		} else if a == uint8('2') {
+		} else if a == '2' {
 			*x -= d
-		} else if a == uint8('3') {
+		} else if a == '3' {
 			*y += d
-		} else if a == uint8('1') {
+		} else if a == '1' {
 			*y -= d
 		}
 	}

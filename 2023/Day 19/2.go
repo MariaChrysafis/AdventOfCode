@@ -59,10 +59,10 @@ func main() {
 		}
 	}
 	var dfs func(Part, Part, string) int
-	dfs = func(part_lower Part, part_higher Part, workflow string) int {
+	dfs = func(partLower Part, partHigher Part, workflow string) int {
 		switch workflow {
 		case "A":
-			return cost(part_lower, part_higher)
+			return cost(partLower, partHigher)
 		case "R":
 			return 0
 		}
@@ -70,17 +70,17 @@ func main() {
 		ans := 0
 		for i, y := range res {
 			if i == len(res)-1 {
-				ans += dfs(part_lower, part_higher, y)
+				ans += dfs(partLower, partHigher, y)
 			} else {
 				arr := strings.Split(y, ":")
 				field := y[0:1]
 				value := StringToInt(arr[0][2:])
-				new_part_lower, new_part_higher := part_lower, part_higher
+				new_part_lower, new_part_higher := partLower, partHigher
 				if strings.Count(arr[0], ">") > 0 {
-					setField(&part_higher, field, min(value, getField(&part_higher, field)))
+					setField(&partHigher, field, min(value, getField(&partHigher, field)))
 					setField(&new_part_lower, field, max(value+1, getField(&new_part_lower, field)))
 				} else {
-					setField(&part_lower, field, max(value, getField(&part_lower, field)))
+					setField(&partLower, field, max(value, getField(&partLower, field)))
 					setField(&new_part_higher, field, min(value-1, getField(&new_part_higher, field)))
 				}
 				ans += dfs(new_part_lower, new_part_higher, arr[1])
